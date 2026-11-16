@@ -1,0 +1,127 @@
+{
+  "cases": [
+    {
+      "id": "mvp-rag-assistant",
+      "workload_tag": "mvp",
+      "scenario": "Single-region LangGraph assistant with Bedrock and optional KB.",
+      "primary_platform_id": "aws-basic",
+      "workload_class": "mvp",
+      "tags": ["reliability", "cost", "mvp"],
+      "cost_budget_index": 0.6,
+      "min_uptime_sla": 0.9,
+      "expects": { "max_cost_index": 0.75, "min_reliability": 0.85, "require_success": true }
+    },
+    {
+      "id": "startup-burst-traffic",
+      "workload_tag": "growth",
+      "scenario": "Early product with unpredictable spikes; cost-sensitive single region.",
+      "primary_platform_id": "aws-basic",
+      "workload_class": "mvp",
+      "tags": ["reliability", "cost"],
+      "cost_budget_index": 0.55,
+      "min_uptime_sla": 0.92,
+      "expects": { "max_cost_index": 0.7, "require_success": true }
+    },
+    {
+      "id": "saas-multi-tenant",
+      "workload_tag": "saas",
+      "scenario": "Per-tenant data boundaries and noisy-neighbor control.",
+      "primary_platform_id": "aws-intermediate",
+      "workload_class": "saas",
+      "require_multi_tenant": true,
+      "tags": ["reliability", "compliance", "multi_tenant"],
+      "expects": {
+        "expect_tenant_isolation": true,
+        "min_compliance": 0.7,
+        "min_reliability": 0.93,
+        "require_success": true
+      }
+    },
+    {
+      "id": "enterprise-async-workers",
+      "workload_tag": "saas",
+      "scenario": "Split orchestrator and SQS workers with cross-AZ resilience.",
+      "primary_platform_id": "aws-intermediate",
+      "secondary_platform_id": "aws-advanced",
+      "workload_class": "saas",
+      "tags": ["reliability", "cost", "multi_tenant"],
+      "min_uptime_sla": 0.995,
+      "expects": { "min_reliability": 0.94, "require_success": true }
+    },
+    {
+      "id": "gcp-agent-platform",
+      "workload_tag": "saas",
+      "scenario": "Cloud Run microservices with Pub/Sub job fan-out.",
+      "primary_platform_id": "gcp-cloud-run",
+      "workload_class": "saas",
+      "require_multi_tenant": true,
+      "tags": ["reliability", "compliance", "multi_tenant"],
+      "expects": { "expect_tenant_isolation": true, "min_reliability": 0.92, "require_success": true }
+    },
+    {
+      "id": "region-outage-drill",
+      "workload_tag": "enterprise",
+      "scenario": "Synthetic AZ/region loss during peak traffic.",
+      "primary_platform_id": "aws-intermediate",
+      "secondary_platform_id": "aws-advanced",
+      "workload_class": "saas",
+      "simulate_region_outage": true,
+      "tags": ["reliability"],
+      "min_uptime_sla": 0.99,
+      "expects": { "require_dr_on_outage": true, "min_reliability": 0.95, "require_success": true }
+    },
+    {
+      "id": "pci-agent-lane",
+      "workload_tag": "fintech",
+      "scenario": "Payment-adjacent agent lane with PCI scope and encryption.",
+      "primary_platform_id": "fintech-pattern",
+      "workload_class": "regulated",
+      "require_pci": true,
+      "require_audit_trail": true,
+      "tags": ["compliance", "fintech"],
+      "expects": { "min_reliability": 0.94, "require_success": true }
+    },
+    {
+      "id": "banking-hitl-approval",
+      "workload_tag": "fintech",
+      "scenario": "Dual-control HITL gate before irreversible ledger actions.",
+      "primary_platform_id": "fintech-pattern",
+      "workload_class": "regulated",
+      "require_audit_trail": true,
+      "tags": ["compliance", "fintech", "audit"],
+      "expects": { "require_success": true }
+    },
+    {
+      "id": "credit-decision-explain",
+      "workload_tag": "fintech",
+      "scenario": "Explainability artifacts for model-assisted credit decisions.",
+      "primary_platform_id": "fintech-pattern",
+      "workload_class": "regulated",
+      "require_pci": false,
+      "require_audit_trail": true,
+      "tags": ["compliance", "fintech"],
+      "expects": { "require_success": true }
+    },
+    {
+      "id": "cost-capped-batch",
+      "workload_tag": "saas",
+      "scenario": "Nightly batch summarization with strict FinOps cap.",
+      "primary_platform_id": "gcp-cloud-run",
+      "workload_class": "saas",
+      "cost_budget_index": 0.5,
+      "tags": ["cost"],
+      "expects": { "max_cost_index": 0.95, "require_success": true }
+    },
+    {
+      "id": "basic-under-regulated-load",
+      "workload_tag": "fintech",
+      "scenario": "Mis-sized basic stack asked to carry regulated workload (negative control).",
+      "primary_platform_id": "aws-basic",
+      "workload_class": "regulated",
+      "require_pci": true,
+      "require_audit_trail": true,
+      "tags": ["compliance", "fintech", "negative"],
+      "expects": { "require_success": false }
+    }
+  ]
+}

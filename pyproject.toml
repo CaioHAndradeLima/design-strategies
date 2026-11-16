@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "design-strategies"
+version = "0.1.0"
+description = "Reference implementation and evaluation gates for cloud architecture patterns (startup, enterprise, fintech)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+design-lab = "design_strategies.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

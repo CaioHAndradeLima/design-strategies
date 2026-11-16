@@ -1,0 +1,1 @@
+"""Synthetic architecture decision scoring for cloud design patterns."""

@@ -1,0 +1,46 @@
+{
+  "profiles": {
+    "ci-all-strategies": {
+      "description": "Compare startup_single_region, enterprise_multi_tenant, and fintech_high_stakes on golden workloads.",
+      "strategies": [
+        "startup_single_region",
+        "enterprise_multi_tenant",
+        "fintech_high_stakes"
+      ],
+      "gates": {
+        "enterprise_multi_tenant": {
+          "min_reliability_score": 0.9,
+          "min_compliance_score": 0.75
+        },
+        "fintech_high_stakes": {
+          "min_compliance_score": 0.88,
+          "min_fintech_fit_rate": 0.85
+        }
+      }
+    },
+    "ci-design-eval": {
+      "description": "Design pipeline scorecard: reliability, cost, compliance checklist pass rates on synthetic workloads.",
+      "strategies": ["enterprise_multi_tenant"],
+      "gates": {
+        "enterprise_multi_tenant": {
+          "min_pass_rate": 0.8,
+          "min_reliability_score": 0.92,
+          "min_compliance_checklist_pass_rate": 0.75
+        }
+      },
+      "scenario_gates": {
+        "min_reliability_checklist_pass_rate": 0.7,
+        "min_fintech_fit_rate": 0.85
+      }
+    },
+    "ci-pipeline-only": {
+      "description": "Smoke profile for enterprise_multi_tenant only.",
+      "strategies": ["enterprise_multi_tenant"],
+      "gates": {
+        "enterprise_multi_tenant": {
+          "min_pass_rate": 0.75
+        }
+      }
+    }
+  }
+}
